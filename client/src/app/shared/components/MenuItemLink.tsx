@@ -17,7 +17,6 @@ export default function MenuItemLink({ children, to }: { children: ReactNode, to
                 }
             }}
         >
-
             {children}
         </MenuItem>
     )
