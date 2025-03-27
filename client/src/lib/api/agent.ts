@@ -1,5 +1,5 @@
 import axios from "axios";
-import { store } from "../util/stores/store";
+import { store } from "../stores/store";
 import { toast } from "react-toastify";
 import { router } from "../../app/router/Routes";
 
@@ -10,7 +10,8 @@ const sleep = (delay: number) => {
 }
 
 export const agent = axios.create({
-    baseURL: import.meta.env.VITE_API_URL
+    baseURL: import.meta.env.VITE_API_URL,
+    withCredentials: true
 });
 
 agent.interceptors.request.use(config => {
