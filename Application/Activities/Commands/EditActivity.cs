@@ -1,13 +1,12 @@
 using Application.Activities.Core;
 using Application.Activities.DTOs;
 using AutoMapper;
-using Domain;
 using MediatR;
 using Persistence;
 
 namespace Application.Activities.Commands;
 
-public class EditActivity
+public static class EditActivity
 {
     public class Command : IRequest<Result<Unit>>
     {
