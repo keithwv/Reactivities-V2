@@ -1,29 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { agent } from "../api/agent";
 import { useLocation } from "react-router";
-import { Activity } from "../types";
 
 export const useActivities = (id?: string) => {
     const queryClient = useQueryClient();
     const location = useLocation();
     const { currentUser } = useAccount();
 
-    const { data: activities, isPending } = useQuery({
+    const { data: activities, isLoading } = useQuery({
         queryKey: ['activities'],
         queryFn: async () => {
             const response = await agent.get<Activity[]>('/activities');
             return response.data;
         },
-        enabled: !id && location.pathname === '/activities',
-        select: data => {
-            return data.map(activity => {
-                return {
-                    ...activity,
-                    isHost: currentUser?.id === activity.hostId,
-                    isGoing: activity.attendees.some(x => x.id === currentUser?.id)
-                }
-            })
-        }
+        enabled: !id && location.pathname === '/activities'
     });
 
     const updateActivity = useMutation({
@@ -44,14 +34,7 @@ export const useActivities = (id?: string) => {
             const response = await agent.get<Activity>(`/activities/${id}`)
             return response.data;
         },
-        enabled: !!id && !!currentUser,
-        select: data => {
-            return {
-                ...data,
-                isHost: currentUser?.id === data.hostId,
-                isGoing: data.attendees.some(x => x.id === currentUser?.id)
-            }
-        }
+        enabled: !!id
     })
 
     const createActivity = useMutation({
@@ -65,7 +48,6 @@ export const useActivities = (id?: string) => {
             })
 
         }
-
     })
 
     const deleteActivity = useMutation({
@@ -121,7 +103,7 @@ export const useActivities = (id?: string) => {
 
     return {
         activities,
-        isPending,
+        isLoading,
         updateActivity,
         createActivity,
         deleteActivity,
