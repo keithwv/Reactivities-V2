@@ -47,9 +47,10 @@ public class ActivitiesController : BaseApiController
         return HandleResult(await Mediator.Send(new DeleteActivity.Command { Id = id }));
     }
 
-    [HttpPost("{id}/attend")]
-    public async Task<ActionResult> Attend(string id) {
-        return BadRequest("Testing 123")
-        return HandleResult(await Mediator.Send(new UpdateAtendance.Command { id = id}));
-    }
+    // [HttpPost("{id}/attend")]
+    // public async Task<ActionResult> Attend(string id)
+    // {
+    //     return BadRequest("Testing 123");
+    //     return HandleResult(await Mediator.Send(new UpdateAtendance.Command { Id = id}));
+    // }
 }
