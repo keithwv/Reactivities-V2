@@ -2,7 +2,7 @@ import { AccessTime, Place } from "@mui/icons-material";
 import { Avatar, Box, Button, Card, CardContent, CardHeader, Chip, Divider, Typography } from "@mui/material"
 import { Link } from "react-router";
 import { formatDate } from "../../../lib/util/util";
-import { Activity } from "../../../lib/types";
+import { type Activity } from "../../../lib/types";
 import AvatarPopover from "../../../app/shared/components/AvatarPopover";
 
 type Props = {
@@ -17,7 +17,7 @@ export default function ActivityCard({ activity }: Props) {
     <Card elevation={3} sx={{ borderRadius: 3 }}>
       <Box display='flex' alignItems='center' justifyContent='space-between'>
         <CardHeader
-          avatar={<Avatar sx={{ height: 80, width: 80 }} />}
+          avatar={<Avatar src={activity.hostImageUrl} sx={{ height: 80, width: 80 }} alt="image of host" />}
           title={activity.title}
           titleTypographyProps={{
             fontWeight: 'bold',
