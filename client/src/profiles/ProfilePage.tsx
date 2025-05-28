@@ -10,14 +10,14 @@ export default function ProfilePage() {
 
     if (loadingProfile) return <Typography>Loading profile...</Typography>
 
-    if(!profile) return <Typography>Profile not found</Typography>
+    if (!profile) return <Typography>Profile not found</Typography>
 
     return (
         <Grid2 container>
-           <Grid2 size={12}>
-                <ProfileHeader profile={profile} />
+            <Grid2 size={12}>
+                <ProfileHeader />
                 <ProfileContent />
-           </Grid2> 
+            </Grid2>
         </Grid2>
     )
 }

@@ -11,18 +11,21 @@ public abstract class DbInitializer
         {
             new()
             {
+                Id = "bob-id",
                 DisplayName = "Bob",
                 UserName = "bob@test.com",
                 Email = "bob@test.com",
             },
             new()
             {
+                Id = "tom-id",
                 DisplayName = "Tom",
                 UserName = "tom@test.com",
                 Email = "bob@test.com",
             },
             new()
             {
+                Id = "jane-id",
                 DisplayName = "Jane",
                 UserName = "jane@test.com",
                 Email = "bob@test.com",

@@ -1,5 +1,6 @@
 using Application.Activities.Core;
 using Application.Activities.DTOs;
+using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -15,7 +16,7 @@ public class GetActivityDetails
         public required string Id { get; set; }
     }
 
-    public class Handler(AppDbContext context, IMapper mapper)
+    public class Handler(AppDbContext context, IMapper mapper, IUserAccessor userAccessor)
         : IRequestHandler<Query, Result<ActivityDto>>
     {
         public async Task<Result<ActivityDto>> Handle(
@@ -24,7 +25,8 @@ public class GetActivityDetails
         )
         {
             var activity = await context
-                .Activities.ProjectTo<ActivityDto>(mapper.ConfigurationProvider)
+                .Activities.ProjectTo<ActivityDto>(mapper.ConfigurationProvider,
+                    new { currentUserId = userAccessor.GetUserId() })
                 .FirstOrDefaultAsync(x => request.Id == x.Id, cancellationToken);
 
             if (activity == null)

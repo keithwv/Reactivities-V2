@@ -4,6 +4,8 @@ import { Profile } from '../../../lib/types';
 import { Avatar } from '@mui/material';
 import { Link } from 'react-router';
 import ProfileCard from '../../../profiles/ProfileCard';
+import { useMutation } from '@tanstack/react-query';
+import agent from '../../../lib/api/agent';
 
 type Props = {
     profile: Profile
@@ -27,6 +29,10 @@ export default function AvatarPopover({ profile }: Props) {
             <Avatar
                 alt={profile.displayName + ' image'}
                 src={profile.imageUrl}
+                sx={{
+                    border: profile.following ? 3 : 0,
+                    borderColor: 'secondary.main'
+                }}
                 component={Link}
                 to={`/profiles/${profile.id}`}
                 onMouseEnter={handlePopoverOpen}
