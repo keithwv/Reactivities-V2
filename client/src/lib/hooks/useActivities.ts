@@ -2,6 +2,7 @@ import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClie
 import { agent } from "../api/agent";
 import { useLocation } from "react-router";
 import { useStore } from "./useStore";
+import { FieldValues } from "react-hook-form";
 
 
 export const useActivities = (id?: string) => {
@@ -46,7 +47,7 @@ export const useActivities = (id?: string) => {
     });
 
     const updateActivity = useMutation({
-        mutationFn: async (activity: Activity) => {
+        mutationFn: async (activity: FieldValues) => {
             await agent.put('/activities', activity)
         },
         onSuccess: async () => {

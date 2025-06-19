@@ -13,8 +13,10 @@ public class ActivitiesController : BaseApiController
     public async Task<ActionResult<PagedList<ActivityDto, DateTime?>>> GetActivities(
         [FromQuery]ActivityParams activityParams)
     {
-        var query = new GetActivityList.Query(;
-        query.Params = activityParams;
+        var query = new GetActivityList.Query
+        {
+            Params = activityParams
+        };
         return HandleResult(await Mediator.Send(query));
     }
 

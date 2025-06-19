@@ -26,7 +26,7 @@ builder.Services.AddControllers(opt =>
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddCors();
 builder.Services.AddSignalR();
@@ -42,10 +42,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 builder.Services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
 builder.Services.AddTransient<ExceptionMiddleware>();
 builder
-    .Services.AddIdentityApiEndpoints<User>(opt =>
-    {
-        opt.User.RequireUniqueEmail = true;
-    })
+    .Services.AddIdentityApiEndpoints<User>(opt => { opt.User.RequireUniqueEmail = true; })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 
@@ -53,10 +50,7 @@ builder.Services.AddAuthorization(opt =>
 {
     opt.AddPolicy(
         "IsActivityHost",
-        policy =>
-        {
-            policy.Requirements.Add(new IsHostRequirement());
-        }
+        policy => { policy.Requirements.Add(new IsHostRequirement()); }
     );
 });
 
@@ -75,11 +69,17 @@ app.UseCors(x =>
         .AllowCredentials()
         .WithOrigins("http://localhost:3000", "https://localhost:3000")
 );
+
+
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>();
 app.MapHub<CommentHub>("/comments");
+app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
